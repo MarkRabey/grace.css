@@ -84,7 +84,7 @@ module.exports = function(grunt) {
             port: 9090,
           },
         },
-        open: false
+        open: false,
       }
     },
 

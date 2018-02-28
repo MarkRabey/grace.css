@@ -1,0 +1,31 @@
+/**
+ * CORE
+ */
+
+// Baseline line-height
+// Used for all spacing units
+$global-baseline: 6px;
+
+// Each size variant has a scaling factor
+$global-spacing-unit-scale-mini: 1;
+$global-spacing-unit-scale-small: 2;
+$global-spacing-unit-scale: 4;
+$global-spacing-unit-scale-large: 8;
+$global-spacing-unit-scale-jumbo: 16;
+
+
+
+// Spacing units
+$global-spacing-unit: $global-baseline * $global-spacing-unit-scale;
+$global-spacing-unit-mini: $global-baseline * $global-spacing-unit-scale-mini;
+$global-spacing-unit-small: $global-baseline * $global-spacing-unit-scale-small;
+$global-spacing-unit-large: $global-baseline * $global-spacing-unit-scale-large;
+$global-spacing-unit-jumbo: $global-baseline * $global-spacing-unit-scale-jumbo;
+
+
+
+/* Base Typography */
+$global-font-size: 16px;
+$global-line-height: $global-spacing-unit;
+
+
