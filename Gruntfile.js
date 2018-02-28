@@ -28,7 +28,7 @@ module.exports = function(grunt) {
           sourcemap: false,
         },
         files: {
-          'css/docs-grace.css': 'src/scss/docs-grace.scss'
+          'docs/css/docs-grace.css': 'src/scss/docs-grace.scss'
         }
       }
     },
@@ -59,8 +59,46 @@ module.exports = function(grunt) {
       },
     },
 
+    site: {
+      docs: {
+        options: {
+          templates: 'src/docs/templates',
+          defaultTemplate: 'default.html',
+        },
+        src: 'src/docs/pages',
+        dest: 'docs',
+      }
+    },
+
+    // Browser Sync
+    browserSync: {
+      bsFiles: ["css/docs-grace.css", "!**/node_modules/**/*"],
+      options: {
+        server: {
+          baseDir: './docs'
+        },
+        port: 8000,
+        ui: {
+          port: 8080,
+          weinre: {
+            port: 9090,
+          },
+        },
+        open: false
+      }
+    },
+
     // Watch
     watch: {
+      docs: {
+        files: ['src/docs/**/*'],
+        tasks: ['docs_compile'],
+        options: {
+          interrupt: false,
+          spawn: false,
+        }
+      },
+
       sass: {
         files: ['src/scss/**/*'],
         tasks: ['sass_compile'],
@@ -79,22 +117,56 @@ module.exports = function(grunt) {
       },
       monitor: {
         tasks: [
+          'docs_compile',
           'sass_compile',
-          'watch:sass'
+          'watch:docs',
+          'watch:sass',
+          'notify:watching',
+          'server',
         ]
       }
     },
 
     notify: {
+      watching: {
+        options: {
+          enabled: true,
+          message: 'Watching Files',
+          title: 'Grace',
+          success: true,
+          duration: 1
+        }
+      },
+
       sass_compile: {
         options: {
           enabled: true,
           message: 'Sass Compiled',
-          title: "Grace",
+          title: 'Grace',
           success: true,
           duration: 1
         }
-      }
+      },
+
+      docs_compile: {
+        options: {
+          enabled: true,
+          message: 'Docs Compiled',
+          title: 'Grace',
+          success: true,
+          duration: 1
+        }
+      },
+
+      server: {
+        options: {
+          enabled: true,
+          message: 'Server Running',
+          title: 'Grace',
+          success: true,
+          duration: 1
+        }
+      },
     }
   }
 
@@ -106,8 +178,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-postcss');
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-notify');
+  grunt.loadNpmTasks('grunt-browser-sync');
+  grunt.loadNpmTasks('grunt-markdown-site');
 
   // Register Tasks
+  grunt.registerTask('docs_compile', ['site', 'notify:docs_compile']);
   grunt.registerTask('sass_compile', ['sass:docs', 'postcss:docs', 'notify:sass_compile']);
+  grunt.registerTask('server', ['browserSync', 'notify:server']);
   grunt.registerTask('monitor', ['concurrent:monitor']);
 }
