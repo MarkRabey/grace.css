@@ -1,0 +1,27 @@
+/**
+ * FONT-SIZE
+ *
+ * Generates rem font-sizes
+ */
+
+@mixin font-size($font-size, $line-height: auto, $important: false) {
+  @if ($important == true) {
+    $important: !important;
+  } @else if ($important == false) {
+    $important: null;
+  } @else {
+    @error "`#{$important}` must be `true` or `false`";
+  }
+
+  font-size: $font-size $important;
+  font-size: ($font-size / $global-font-size) * 1rem $important;
+
+  @if ($line-height == "auto") {
+    $lines: ceil($font-size / $global-baseline) + 1;
+    $line-height: $lines * $global-baseline;
+
+    line-height: ($line-height / $font-size) $important;
+  } @else {
+    line-height: $line-height $important;
+  }
+}

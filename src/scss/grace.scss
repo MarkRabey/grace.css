@@ -36,6 +36,8 @@
 
 
 // TOOLS
+@import "tools/tools.font-size";
+@import "tools/tools.colors";
 
 
 
@@ -50,6 +52,7 @@
 
 // ELEMENTS
 @import "elements/elements.page";
+@import "elements/elements.headings";
 
 
 
@@ -68,6 +71,7 @@
 
 
 // UTILITIES
+@import "utilities/utilities.colors";
 
 
 

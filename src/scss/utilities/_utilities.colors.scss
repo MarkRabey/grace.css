@@ -1,0 +1,25 @@
+/**
+ * COLORS
+ */
+
+// Base colors based on Material Design Spec
+
+$colors: (
+  red: palette(#f44336),
+  pink: palette(#e91e63),
+  purple: palette(#9c27b0),
+  indigo: palette(#3f51b5),
+  blue: palette(#2196f3),
+);
+
+@each $name, $palette in $colors {
+  .#{$name} {
+    background-color: get-color($palette, '500');
+  }
+
+  @each $type, $color in $palette {
+    .#{$name}--#{$type} {
+      background-color: $color;
+    }
+  }
+}
